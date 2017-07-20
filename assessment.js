@@ -68,6 +68,39 @@
         '{userName}のいいところは気配りです。{userName}の配慮が多くの人を救っています。',
         '{userName}のいいところはその全てです。ありのままの{userName}自身がいいところなのです。',
         '{userName}のいいところは自制心です。やばいと思ったときにしっかりと衝動を抑えられる{userName}が皆から評価されています。'
+        '{userName}のいいところは優しさです。{userName}の優しい雰囲気や立ち振舞に多くの人が癒やされています。'
+    ];
+
+    /**
+    * 名前の文字列を渡すと診断結果を返す関数
+    * @param {string} userName ユーザーの名前
+    * @return {string} 診断結果
+    */
+    function assessment(userName) {
+        // 全文字のコード番号を取得してそれを足し合わせる
+        let sumOfcharCode = 0;
+        for (let i = 0; i < userName.length; i++) {
+            sumOfcharCode = sumOfcharCode + userName.charCodeAt(i);
+        }
+
+        // 文字のコード番号の合計を回答の数で割って添字の数値を求める
+        const index = sumOfcharCode % answers.length;
+        let result = answers[index];
+
+        result = result.replace(/{userName}/g, userName);
+        return result;
+    }
+
+    // テストコード
+    console.assert(
+        assessment('太郎') === '太郎のいいところは決断力です。太郎がする決断にいつも助けられる人がいます。',
+        '診断結果の文言の特定の部分を名前に置き換える処理が正しくありません。'
+    );
+    console.assert(
+        assessment('太郎') === assessment('太郎'),
+        '入力が同じ名前なら同じ診断結果を出力する処理が正しくありません。'
+    );
+})();
     ];
 
     /**
